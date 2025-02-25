@@ -1,33 +1,33 @@
 <header class="site-header">
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <a routerLink="/">
-            <img src="assets/images/logo.png" alt="E-Ticaret Logo">
-          </a>
-        </div>
-        
-        <nav class="main-nav">
-          <ul>
-            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Ana Sayfa</a></li>
-            <li><a routerLink="/products" routerLinkActive="active">Ürünler</a></li>
-            <li><a routerLink="/about" routerLinkActive="active">Hakkımızda</a></li>
-            <li><a routerLink="/contact" routerLinkActive="active">İletişim</a></li>
-          </ul>
-        </nav>
-        
-        <div class="header-actions">
-          <a routerLink="/favorites" class="action-icon">
-            <i class="fa fa-heart"></i>
-          </a>
-          <a routerLink="/cart" class="action-icon">
-            <i class="fa fa-shopping-cart"></i>
-            <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
-          </a>
-          <a routerLink="/profile" class="action-icon">
-            <i class="fa fa-user"></i>
-          </a>
-        </div>
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <a routerLink="/">
+          <img src="assets/images/logo2.png" alt="E-Ticaret Logo">
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul>
+          <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Ana Sayfa</a></li>
+          <li><a routerLink="/products" routerLinkActive="active">Ürünler</a></li>
+          <li><a routerLink="/about" routerLinkActive="active">Hakkımızda</a></li>
+          <li><a routerLink="/contact" routerLinkActive="active">İletişim</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <a routerLink="/favorites" class="action-icon">
+          <i class="fa fa-heart"></i>
+        </a>
+        <a routerLink="/cart" class="action-icon">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </a>
+        <a routerLink="/profile" class="action-icon">
+          <i class="fa fa-user"></i>
+        </a>
       </div>
     </div>
-  </header>
+  </div>
+</header>
