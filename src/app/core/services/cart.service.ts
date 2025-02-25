@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Cart, CartItem } from '../../models/cart.model';
 import { Product } from '../../models/product.model';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,18 @@ import { Product } from '../../models/product.model';
 export class CartService {
   private cart: Cart = { items: [], totalPrice: 0 };
   private cartSubject = new BehaviorSubject<Cart>(this.cart);
+  private isBrowser: boolean;
 
-  constructor() {
-    // LocalStorage'dan sepeti yükle
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      this.cart = JSON.parse(savedCart);
-      this.cartSubject.next(this.cart);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    
+    // LocalStorage'dan sepeti yükle (sadece tarayıcıda)
+    if (this.isBrowser) {
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        this.cart = JSON.parse(savedCart);
+        this.cartSubject.next(this.cart);
+      }
     }
   }
 
@@ -56,7 +62,11 @@ export class CartService {
   private updateCart(): void {
     this.calculateTotal();
     this.cartSubject.next(this.cart);
-    localStorage.setItem('cart', JSON.stringify(this.cart));
+    
+    // LocalStorage'a kaydet (sadece tarayıcıda)
+    if (this.isBrowser) {
+      localStorage.setItem('cart', JSON.stringify(this.cart));
+    }
   }
 
   private calculateTotal(): void {

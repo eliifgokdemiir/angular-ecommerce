@@ -1,27 +1,23 @@
-// src/app/layout/header/header.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { CartService } from '../../core/services/cart.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterModule]
 })
 export class HeaderComponent implements OnInit {
-  cartItemCount$!: Observable<number>;
+  cartItemCount = 0;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.cartItemCount$ = this.cartService.getCart().pipe(
-      map(cart => cart.items.reduce((count, item) => count + item.quantity, 0))
-    );
+    this.cartService.getCart().subscribe(cart => {
+      this.cartItemCount = cart.items.reduce((count, item) => count + item.quantity, 0);
+    });
   }
 }

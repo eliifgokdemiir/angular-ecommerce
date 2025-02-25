@@ -1,59 +1,33 @@
-<!-- src/app/layout/header/header.component.html -->
-<header class="header">
+<header class="site-header">
     <div class="container">
       <div class="header-content">
         <div class="logo">
           <a routerLink="/">
-            <img src="assets/images/logo.png" alt="E-Shop Logo">
+            <img src="assets/images/logo.png" alt="E-Ticaret Logo">
           </a>
         </div>
         
-        <div class="search-bar">
-          <input type="text" placeholder="Ürün, kategori veya marka ara...">
-          <button class="search-button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Ana Sayfa</a></li>
+            <li><a routerLink="/products" routerLinkActive="active">Ürünler</a></li>
+            <li><a routerLink="/about" routerLinkActive="active">Hakkımızda</a></li>
+            <li><a routerLink="/contact" routerLinkActive="active">İletişim</a></li>
+          </ul>
+        </nav>
         
         <div class="header-actions">
-          <a routerLink="/favorites" class="action-item">
+          <a routerLink="/favorites" class="action-icon">
             <i class="fa fa-heart"></i>
-            <span>Favoriler</span>
           </a>
-          
-          <a routerLink="/cart" class="action-item">
+          <a routerLink="/cart" class="action-icon">
             <i class="fa fa-shopping-cart"></i>
-            <span>Sepet</span>
-            <span class="badge" *ngIf="(cartItemCount$ | async) > 0">
-              {{ cartItemCount$ | async }}
-            </span>
+            <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
           </a>
-          
-          <div class="user-menu">
-            <a routerLink="/profile" class="action-item">
-              <i class="fa fa-user"></i>
-              <span>Hesabım</span>
-            </a>
-            <div class="dropdown-menu">
-              <a routerLink="/profile">Profilim</a>
-              <a routerLink="/profile/orders">Siparişlerim</a>
-              <a routerLink="/favorites">Favorilerim</a>
-              <a routerLink="/settings">Ayarlar</a>
-              <a href="#">Çıkış Yap</a>
-            </div>
-          </div>
+          <a routerLink="/profile" class="action-icon">
+            <i class="fa fa-user"></i>
+          </a>
         </div>
       </div>
-      
-      <nav class="main-nav">
-        <ul>
-          <li><a routerLink="/products/category/electronics">Elektronik</a></li>
-          <li><a routerLink="/products/category/fashion">Moda</a></li>
-          <li><a routerLink="/products/category/home">Ev & Yaşam</a></li>
-          <li><a routerLink="/products/category/cosmetics">Kozmetik</a></li>
-          <li><a routerLink="/products/category/sports">Spor</a></li>
-          <li><a routerLink="/products/category/books">Kitap</a></li>
-        </ul>
-      </nav>
     </div>
   </header>
