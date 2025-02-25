@@ -1,9 +1,8 @@
-
 <div class="product-detail-container" *ngIf="product">
     <div class="container">
       <div class="breadcrumb">
         <a routerLink="/">Ana Sayfa</a> &gt;
-        <a [routerLink]="['/products/category', product.category]">{{ product.category }}</a> &gt;
+        <a [routerLink]="['/products/category', product.category]">{{ product.category | titlecase }}</a> &gt;
         <span>{{ product.name }}</span>
       </div>
   
@@ -23,9 +22,9 @@
                  [ngClass]="{'fa-star': star <= product.rating, 'fa-star-o': star > product.rating}"></i>
               <span class="rating-count">({{ product.rating }})</span>
             </div>
-            <div class="product-stock" [ngClass]="{'in-stock': product.inStock, 'out-of-stock': !product.inStock}">
-              <i class="fa" [ngClass]="{'fa-check-circle': product.inStock, 'fa-times-circle': !product.inStock}"></i>
-              {{ product.inStock ? 'Stokta Var' : 'Stokta Yok' }}
+            <div class="product-stock" [ngClass]="{'in-stock': product.stock > 0, 'out-of-stock': product.stock <= 0}">
+              <i class="fa" [ngClass]="{'fa-check-circle': product.stock > 0, 'fa-times-circle': product.stock <= 0}"></i>
+              {{ product.stock > 0 ? 'Stokta Var' : 'Stokta Yok' }}
             </div>
           </div>
   
@@ -48,11 +47,11 @@
               <button (click)="increaseQuantity()">+</button>
             </div>
             
-            <button class="btn-add-cart" (click)="addToCart()" [disabled]="!product.inStock">
+            <button class="btn-add-cart" (click)="addToCart()" [disabled]="product.stock <= 0">
               <i class="fa fa-shopping-cart"></i> Sepete Ekle
             </button>
             
-            <button class="btn-favorite">
+            <button class="btn-favorite" (click)="addToFavorites()">
               <i class="fa fa-heart"></i> Favorilere Ekle
             </button>
           </div>
@@ -67,8 +66,27 @@
             *ngFor="let product of relatedProducts" 
             [product]="product"
             (addToCartEvent)="cartService.addToCart($event)"
-          ></app-product-card>
+            (addToFavoritesEvent)="addToFavorites($event)">
+          </app-product-card>
+        </div>
+      </div>
+            <div class="product-info">
+              <h3 class="product-name">{{ relatedProduct.name }}</h3>
+              <div class="product-price">
+                <span *ngIf="relatedProduct.discountPrice" class="original-price">{{ relatedProduct.price | currency:'₺' }}</span>
+                <span class="current-price">{{ relatedProduct.discountPrice || relatedProduct.price | currency:'₺' }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Ürün yüklenmediyse yükleniyor göstergesi -->
+  <div class="loading-container" *ngIf="!product">
+    <div class="loading-spinner">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+    <p>Ürün yükleniyor...</p>
   </div>

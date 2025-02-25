@@ -5,14 +5,16 @@ import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 import { Product } from '../../../models/product.model';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductCardComponent } from '../product-card/product-card.component';
+import { FavoritesService } from '../../../core/services/favorites.service';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule, ProductCardComponent]
 })
 export class ProductDetailComponent implements OnInit {
   product!: Product;
@@ -22,7 +24,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private favoritesService: FavoritesService,
+    public cartService: CartService // public yapıldı çünkü template'de doğrudan erişiliyor
   ) { }
 
   ngOnInit(): void {
@@ -65,5 +68,10 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(): void {
     this.cartService.addToCart(this.product, this.quantity);
+  }
+  
+  addToFavorites(product?: Product): void {
+    const productToAdd = product || this.product;
+    this.favoritesService.addToFavorites(productToAdd);
   }
 }

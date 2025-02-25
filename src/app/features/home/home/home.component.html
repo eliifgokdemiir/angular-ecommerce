@@ -2,8 +2,8 @@
 <div class="home-container">
     <!-- Hero Banner Slider -->
     <section class="hero-slider">
-      <div class="slider-container">
-        <div *ngFor="let banner of banners" class="slide">
+      <div class="slider-container" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+        <div *ngFor="let banner of banners; let i = index" class="slide" [class.active]="i === currentSlide">
           <img [src]="banner.imageUrl" [alt]="banner.title">
           <div class="slide-content">
             <h2>{{ banner.title }}</h2>
@@ -11,6 +11,21 @@
             <a [routerLink]="banner.link" class="btn btn-primary">{{ banner.buttonText }}</a>
           </div>
         </div>
+      </div>
+      
+      <div class="slider-controls">
+        <button class="slider-prev" (click)="prevSlide()">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        <div class="slider-dots">
+          <span *ngFor="let banner of banners; let i = index" 
+                class="dot" 
+                [class.active]="i === currentSlide"
+                (click)="goToSlide(i)"></span>
+        </div>
+        <button class="slider-next" (click)="nextSlide()">
+          <i class="fa fa-chevron-right"></i>
+        </button>
       </div>
     </section>
   
@@ -34,30 +49,12 @@
       <div class="container">
         <h2 class="section-title">Öne Çıkan Ürünler</h2>
         <div class="products-grid">
-          <div *ngFor="let product of featuredProducts" class="product-card">
-            <div class="product-image">
-              <img [src]="product.imageUrl" [alt]="product.name">
-              <div class="product-actions">
-                <button class="btn-favorite">
-                  <i class="fa fa-heart"></i>
-                </button>
-                <button class="btn-add-cart" (click)="addToCart(product)">
-                  <i class="fa fa-shopping-cart"></i> Sepete Ekle
-                </button>
-              </div>
-            </div>
-            <div class="product-info">
-              <h3 class="product-name">{{ product.name }}</h3>
-              <div class="product-price">
-                <span *ngIf="product.discountPrice" class="original-price">{{ product.price | currency:'₺' }}</span>
-                <span class="current-price">{{ product.discountPrice || product.price | currency:'₺' }}</span>
-              </div>
-              <div class="product-rating">
-                <i *ngFor="let star of [1,2,3,4,5]" class="fa" 
-                   [ngClass]="{'fa-star': star <= product.rating, 'fa-star-o': star > product.rating}"></i>
-              </div>
-            </div>
-          </div>
+          <app-product-card 
+            *ngFor="let product of featuredProducts" 
+            [product]="product"
+            (addToCartEvent)="addToCart($event)"
+            (addToFavoritesEvent)="addToFavorites($event)">
+          </app-product-card>
         </div>
       </div>
     </section>
@@ -67,26 +64,12 @@
       <div class="container">
         <h2 class="section-title">Yeni Gelenler</h2>
         <div class="products-grid">
-          <div *ngFor="let product of newArrivals" class="product-card">
-            <div class="product-image">
-              <img [src]="product.imageUrl" [alt]="product.name">
-              <div class="product-actions">
-                <button class="btn-favorite">
-                  <i class="fa fa-heart"></i>
-                </button>
-                <button class="btn-add-cart" (click)="addToCart(product)">
-                  <i class="fa fa-shopping-cart"></i> Sepete Ekle
-                </button>
-              </div>
-            </div>
-            <div class="product-info">
-              <h3 class="product-name">{{ product.name }}</h3>
-              <div class="product-price">
-                <span *ngIf="product.discountPrice" class="original-price">{{ product.price | currency:'₺' }}</span>
-                <span class="current-price">{{ product.discountPrice || product.price | currency:'₺' }}</span>
-              </div>
-            </div>
-          </div>
+          <app-product-card 
+            *ngFor="let product of newArrivals" 
+            [product]="product"
+            (addToCartEvent)="addToCart($event)"
+            (addToFavoritesEvent)="addToFavorites($event)">
+          </app-product-card>
         </div>
       </div>
     </section>
@@ -114,4 +97,4 @@
         </div>
       </div>
     </section>
-  </div>
+</div>

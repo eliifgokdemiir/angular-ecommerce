@@ -146,7 +146,7 @@
             <div class="summary-totals">
               <div class="summary-row">
                 <span>Ara Toplam</span>
-                <span *ngIf="cart">{{ cart?.totalPrice | currency:'₺' }}</span>
+                <span *ngIf="cart">{{ cart.totalPrice | currency:'₺' }}</span>
               </div>
               
               <div class="summary-row">
@@ -156,7 +156,7 @@
               
               <div class="summary-row total">
                 <span>Toplam</span>
-                <span *ngIf="cart">{{ cart?.totalPrice | currency:'₺' }}</span>
+                <span *ngIf="cart">{{ cart.totalPrice | currency:'₺' }}</span>
               </div>
             </div>
           </div>

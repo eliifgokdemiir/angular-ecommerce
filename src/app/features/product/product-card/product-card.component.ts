@@ -1,16 +1,14 @@
-
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Product } from '../../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Product } from '../../../models/product.model';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterModule]
 })
 export class ProductCardComponent {
   @Input() product!: Product;
