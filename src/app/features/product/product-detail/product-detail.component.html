@@ -1,0 +1,74 @@
+
+<div class="product-detail-container" *ngIf="product">
+    <div class="container">
+      <div class="breadcrumb">
+        <a routerLink="/">Ana Sayfa</a> &gt;
+        <a [routerLink]="['/products/category', product.category]">{{ product.category }}</a> &gt;
+        <span>{{ product.name }}</span>
+      </div>
+  
+      <div class="product-detail">
+        <div class="product-gallery">
+          <div class="main-image">
+            <img [src]="product.imageUrl" [alt]="product.name">
+          </div>
+        </div>
+  
+        <div class="product-info">
+          <h1 class="product-name">{{ product.name }}</h1>
+          
+          <div class="product-meta">
+            <div class="product-rating">
+              <i *ngFor="let star of [1,2,3,4,5]" class="fa" 
+                 [ngClass]="{'fa-star': star <= product.rating, 'fa-star-o': star > product.rating}"></i>
+              <span class="rating-count">({{ product.rating }})</span>
+            </div>
+            <div class="product-stock" [ngClass]="{'in-stock': product.inStock, 'out-of-stock': !product.inStock}">
+              <i class="fa" [ngClass]="{'fa-check-circle': product.inStock, 'fa-times-circle': !product.inStock}"></i>
+              {{ product.inStock ? 'Stokta Var' : 'Stokta Yok' }}
+            </div>
+          </div>
+  
+          <div class="product-price">
+            <span *ngIf="product.discountPrice" class="original-price">{{ product.price | currency:'₺' }}</span>
+            <span class="current-price">{{ product.discountPrice || product.price | currency:'₺' }}</span>
+            <span *ngIf="product.discountPrice" class="discount-badge">
+              {{ ((product.price - product.discountPrice) / product.price * 100) | number:'1.0-0' }}% İndirim
+            </span>
+          </div>
+  
+          <div class="product-description">
+            <p>{{ product.description }}</p>
+          </div>
+  
+          <div class="product-actions">
+            <div class="quantity-selector">
+              <button (click)="decreaseQuantity()" [disabled]="quantity <= 1">-</button>
+              <input type="number" [(ngModel)]="quantity" min="1">
+              <button (click)="increaseQuantity()">+</button>
+            </div>
+            
+            <button class="btn-add-cart" (click)="addToCart()" [disabled]="!product.inStock">
+              <i class="fa fa-shopping-cart"></i> Sepete Ekle
+            </button>
+            
+            <button class="btn-favorite">
+              <i class="fa fa-heart"></i> Favorilere Ekle
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Related Products -->
+      <div class="related-products" *ngIf="relatedProducts.length > 0">
+        <h2 class="section-title">Benzer Ürünler</h2>
+        <div class="products-grid">
+          <app-product-card 
+            *ngFor="let product of relatedProducts" 
+            [product]="product"
+            (addToCartEvent)="cartService.addToCart($event)"
+          ></app-product-card>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,111 @@
+<!-- src/app/features/profile/profile/profile.component.html -->
+<div class="profile-container">
+    <div class="container">
+      <h1 class="page-title">Hesabım</h1>
+      
+      <div class="profile-content">
+        <div class="profile-sidebar">
+          <div class="user-info">
+            <div class="user-avatar">
+              <i class="fa fa-user"></i>
+            </div>
+            <h3 class="user-name">{{ user?.name }}</h3>
+            <p class="user-email">{{ user?.email }}</p>
+          </div>
+          
+          <ul class="profile-menu">
+            <li class="active"><a routerLink="/profile">Profilim</a></li>
+            <li><a routerLink="/profile/orders">Siparişlerim</a></li>
+            <li><a routerLink="/favorites">Favorilerim</a></li>
+            <li><a routerLink="/settings">Ayarlar</a></li>
+            <li><a href="#">Çıkış Yap</a></li>
+          </ul>
+        </div>
+        
+        <div class="profile-main">
+          <div class="profile-section">
+            <div class="section-header">
+              <h2 class="section-title">Kişisel Bilgiler</h2>
+              <button class="btn-edit" (click)="toggleEditMode()" *ngIf="!isEditMode">
+                <i class="fa fa-pencil"></i> Düzenle
+              </button>
+            </div>
+            
+            <div class="profile-form" *ngIf="user">
+              <div class="form-group" *ngIf="!isEditMode">
+                <label>Ad Soyad</label>
+                <p>{{ user.name }}</p>
+              </div>
+              <div class="form-group" *ngIf="isEditMode">
+                <label for="name">Ad Soyad</label>
+                <input type="text" id="name" [(ngModel)]="user.name">
+              </div>
+              
+              <div class="form-group" *ngIf="!isEditMode">
+                <label>E-posta</label>
+                <p>{{ user.email }}</p>
+              </div>
+              <div class="form-group" *ngIf="isEditMode">
+                <label for="email">E-posta</label>
+                <input type="email" id="email" [(ngModel)]="user.email">
+              </div>
+              
+              <div class="form-group" *ngIf="!isEditMode">
+                <label>Telefon</label>
+                <p>{{ user.phone || 'Belirtilmemiş' }}</p>
+              </div>
+              <div class="form-group" *ngIf="isEditMode">
+                <label for="phone">Telefon</label>
+                <input type="tel" id="phone" [(ngModel)]="user.phone">
+              </div>
+              
+              <div class="form-actions" *ngIf="isEditMode">
+                <button class="btn-cancel" (click)="toggleEditMode()">İptal</button>
+                <button class="btn-save" (click)="saveProfile()">Kaydet</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-section">
+            <div class="section-header">
+              <h2 class="section-title">Adreslerim</h2>
+              <button class="btn-add" (click)="addNewAddress()">
+                <i class="fa fa-plus"></i> Yeni Adres Ekle
+              </button>
+            </div>
+            
+            <div class="addresses-list">
+              <div *ngFor="let address of addresses" class="address-card">
+                <div class="address-header">
+                  <h3 class="address-title">{{ address.title }}</h3>
+                  <div class="address-actions">
+                    <button class="btn-edit-address" (click)="editAddress(address)">
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn-delete-address" (click)="deleteAddress(address.id)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="address-content">
+                  <p class="address-name">{{ address.fullName }}</p>
+                  <p class="address-text">{{ address.address }}</p>
+                  <p class="address-city">{{ address.city }} - {{ address.zipCode }}</p>
+                </div>
+                
+                <div class="address-footer">
+                  <button class="btn-default" 
+                          [ngClass]="{'active': address.isDefault}"
+                          (click)="setDefaultAddress(address.id)"
+                          [disabled]="address.isDefault">
+                    {{ address.isDefault ? 'Varsayılan Adres' : 'Varsayılan Yap' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

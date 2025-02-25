@@ -1,0 +1,25 @@
+
+<div class="product-card">
+    <div class="product-image">
+      <img [src]="product.imageUrl" [alt]="product.name">
+      <div class="product-actions">
+        <button class="btn-favorite" (click)="addToFavorites()">
+          <i class="fa fa-heart"></i>
+        </button>
+        <button class="btn-add-cart" (click)="addToCart()">
+          <i class="fa fa-shopping-cart"></i> Sepete Ekle
+        </button>
+      </div>
+    </div>
+    <div class="product-info">
+      <h3 class="product-name">{{ product.name }}</h3>
+      <div class="product-price">
+        <span *ngIf="product.discountPrice" class="original-price">{{ product.price | currency:'₺' }}</span>
+        <span class="current-price">{{ product.discountPrice || product.price | currency:'₺' }}</span>
+      </div>
+      <div class="product-rating">
+        <i *ngFor="let star of [1,2,3,4,5]" class="fa" 
+           [ngClass]="{'fa-star': star <= product.rating, 'fa-star-o': star > product.rating}"></i>
+      </div>
+    </div>
+  </div>

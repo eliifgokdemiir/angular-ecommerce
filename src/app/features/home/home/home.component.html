@@ -1,0 +1,117 @@
+<!-- src/app/features/home/home/home.component.html -->
+<div class="home-container">
+    <!-- Hero Banner Slider -->
+    <section class="hero-slider">
+      <div class="slider-container">
+        <div *ngFor="let banner of banners" class="slide">
+          <img [src]="banner.imageUrl" [alt]="banner.title">
+          <div class="slide-content">
+            <h2>{{ banner.title }}</h2>
+            <p>{{ banner.subtitle }}</p>
+            <a [routerLink]="banner.link" class="btn btn-primary">{{ banner.buttonText }}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Categories -->
+    <section class="categories-section">
+      <div class="container">
+        <h2 class="section-title">Kategoriler</h2>
+        <div class="categories-grid">
+          <a *ngFor="let category of categories" [routerLink]="['/products/category', category.id]" class="category-card">
+            <div class="category-icon">
+              <i class="fa fa-{{ category.icon }}"></i>
+            </div>
+            <h3>{{ category.name }}</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Featured Products -->
+    <section class="featured-products">
+      <div class="container">
+        <h2 class="section-title">Öne Çıkan Ürünler</h2>
+        <div class="products-grid">
+          <div *ngFor="let product of featuredProducts" class="product-card">
+            <div class="product-image">
+              <img [src]="product.imageUrl" [alt]="product.name">
+              <div class="product-actions">
+                <button class="btn-favorite">
+                  <i class="fa fa-heart"></i>
+                </button>
+                <button class="btn-add-cart" (click)="addToCart(product)">
+                  <i class="fa fa-shopping-cart"></i> Sepete Ekle
+                </button>
+              </div>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">{{ product.name }}</h3>
+              <div class="product-price">
+                <span *ngIf="product.discountPrice" class="original-price">{{ product.price | currency:'₺' }}</span>
+                <span class="current-price">{{ product.discountPrice || product.price | currency:'₺' }}</span>
+              </div>
+              <div class="product-rating">
+                <i *ngFor="let star of [1,2,3,4,5]" class="fa" 
+                   [ngClass]="{'fa-star': star <= product.rating, 'fa-star-o': star > product.rating}"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- New Arrivals -->
+    <section class="new-arrivals">
+      <div class="container">
+        <h2 class="section-title">Yeni Gelenler</h2>
+        <div class="products-grid">
+          <div *ngFor="let product of newArrivals" class="product-card">
+            <div class="product-image">
+              <img [src]="product.imageUrl" [alt]="product.name">
+              <div class="product-actions">
+                <button class="btn-favorite">
+                  <i class="fa fa-heart"></i>
+                </button>
+                <button class="btn-add-cart" (click)="addToCart(product)">
+                  <i class="fa fa-shopping-cart"></i> Sepete Ekle
+                </button>
+              </div>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">{{ product.name }}</h3>
+              <div class="product-price">
+                <span *ngIf="product.discountPrice" class="original-price">{{ product.price | currency:'₺' }}</span>
+                <span class="current-price">{{ product.discountPrice || product.price | currency:'₺' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Promotional Banners -->
+    <section class="promo-banners">
+      <div class="container">
+        <div class="banner-grid">
+          <div class="promo-banner">
+            <img src="assets/images/promo1.jpg" alt="Promotional Banner">
+            <div class="banner-content">
+              <h3>Yaz Koleksiyonu</h3>
+              <p>%30 İndirim</p>
+              <a routerLink="/products/category/fashion" class="btn btn-outline">Alışverişe Başla</a>
+            </div>
+          </div>
+          <div class="promo-banner">
+            <img src="assets/images/promo2.jpg" alt="Promotional Banner">
+            <div class="banner-content">
+              <h3>Akıllı Telefonlar</h3>
+              <p>En Yeni Modeller</p>
+              <a routerLink="/products/category/electronics" class="btn btn-outline">Keşfet</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

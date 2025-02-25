@@ -1,0 +1,166 @@
+<!-- src/app/features/checkout/checkout/checkout.component.html -->
+<div class="checkout-container">
+    <div class="container">
+      <h1 class="page-title">Ödeme</h1>
+      
+      <div class="checkout-steps">
+        <div class="step" [ngClass]="{'active': currentStep === 1, 'completed': currentStep > 1}">
+          <div class="step-number">1</div>
+          <div class="step-title">Teslimat Adresi</div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" [ngClass]="{'active': currentStep === 2, 'disabled': currentStep < 2}">
+          <div class="step-number">2</div>
+          <div class="step-title">Ödeme Bilgileri</div>
+        </div>
+      </div>
+      
+      <div class="checkout-content">
+        <div class="checkout-main">
+          <!-- Adres Seçimi -->
+          <div class="checkout-section" *ngIf="currentStep === 1">
+            <h2 class="section-title">Teslimat Adresi</h2>
+            
+            <div class="addresses-list" *ngIf="addresses && addresses.length > 0">
+              <div *ngFor="let address of addresses" 
+                   class="address-card" 
+                   [ngClass]="{'selected': selectedAddressId === address.id}"
+                   (click)="selectAddress(address.id)">
+                <div class="address-header">
+                  <h3 class="address-title">{{ address.title }}</h3>
+                  <div class="address-badge" *ngIf="address.isDefault">Varsayılan</div>
+                </div>
+                
+                <div class="address-content">
+                  <p class="address-name">{{ address.fullName }}</p>
+                  <p class="address-text">{{ address.address }}</p>
+                  <p class="address-city">{{ address.city }} - {{ address.zipCode }}</p>
+                </div>
+              </div>
+              
+              <div class="address-card add-new">
+                <div class="add-new-content">
+                  <i class="fa fa-plus"></i>
+                  <span>Yeni Adres Ekle</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="empty-addresses" *ngIf="!addresses || addresses.length === 0">
+              <p>Kayıtlı adresiniz bulunmamaktadır.</p>
+              <button class="btn-add-address">
+                <i class="fa fa-plus"></i> Yeni Adres Ekle
+              </button>
+            </div>
+            
+            <div class="section-actions">
+              <button class="btn-continue" [disabled]="!selectedAddressId" (click)="nextStep()">
+                Devam Et <i class="fa fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Ödeme Bilgileri -->
+          <div class="checkout-section" *ngIf="currentStep === 2">
+            <h2 class="section-title">Ödeme Bilgileri</h2>
+            
+            <div class="payment-methods">
+              <div *ngFor="let method of paymentMethods" class="payment-method">
+                <input type="radio" [id]="method.id" name="paymentMethod" [value]="method.id" 
+                       [checked]="method.id === 'credit_card'">
+                <label [for]="method.id">{{ method.name }}</label>
+              </div>
+            </div>
+            
+            <div class="credit-card-form" [formGroup]="paymentForm">
+              <div class="form-group">
+                <label for="cardName">Kart Üzerindeki İsim</label>
+                <input type="text" id="cardName" formControlName="cardName" placeholder="Kart sahibinin adı">
+                <div class="error-message" *ngIf="paymentForm.get('cardName')?.invalid && paymentForm.get('cardName')?.touched">
+                  Kart sahibinin adını giriniz
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="cardNumber">Kart Numarası</label>
+                <input type="text" id="cardNumber" formControlName="cardNumber" placeholder="1234 5678 9012 3456">
+                <div class="error-message" *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched">
+                  Geçerli bir kart numarası giriniz
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Son Kullanma Tarihi</label>
+                  <div class="expiry-inputs">
+                    <input type="text" formControlName="expiryMonth" placeholder="AA">
+                    <span>/</span>
+                    <input type="text" formControlName="expiryYear" placeholder="YY">
+                  </div>
+                  <div class="error-message" *ngIf="(paymentForm.get('expiryMonth')?.invalid && paymentForm.get('expiryMonth')?.touched) || 
+                                                   (paymentForm.get('expiryYear')?.invalid && paymentForm.get('expiryYear')?.touched)">
+                    Geçerli bir son kullanma tarihi giriniz
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" formControlName="cvv" placeholder="123">
+                  <div class="error-message" *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched">
+                    Geçerli bir CVV giriniz
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="section-actions">
+              <button class="btn-back" (click)="prevStep()">
+                <i class="fa fa-arrow-left"></i> Geri
+              </button>
+              <button class="btn-place-order" 
+                      [disabled]="paymentForm.invalid || isSubmitting" 
+                      (click)="placeOrder()">
+                {{ isSubmitting ? 'İşleniyor...' : 'Siparişi Tamamla' }}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="checkout-sidebar">
+          <div class="order-summary">
+            <h2 class="summary-title">Sipariş Özeti</h2>
+            
+            <div class="summary-items">
+              <div *ngFor="let item of cart?.items" class="summary-item">
+                <div class="item-image">
+                  <img [src]="item.product.imageUrl" [alt]="item.product.name">
+                  <span class="item-quantity">{{ item.quantity }}</span>
+                </div>
+                <div class="item-details">
+                  <h3 class="item-name">{{ item.product.name }}</h3>
+                  <span class="item-price">{{ (item.product.discountPrice || item.product.price) | currency:'₺' }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="summary-totals">
+              <div class="summary-row">
+                <span>Ara Toplam</span>
+                <span *ngIf="cart">{{ cart?.totalPrice | currency:'₺' }}</span>
+              </div>
+              
+              <div class="summary-row">
+                <span>Kargo</span>
+                <span>Ücretsiz</span>
+              </div>
+              
+              <div class="summary-row total">
+                <span>Toplam</span>
+                <span *ngIf="cart">{{ cart?.totalPrice | currency:'₺' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

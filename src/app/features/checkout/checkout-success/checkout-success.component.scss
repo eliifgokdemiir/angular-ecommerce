@@ -1,0 +1,178 @@
+// src/app/features/checkout/checkout-success/checkout-success.component.scss
+.success-container {
+    padding: 50px 0;
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .success-content {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      padding: 40px;
+      text-align: center;
+      
+      .success-icon {
+        font-size: 80px;
+        color: #4caf50;
+        margin-bottom: 20px;
+      }
+      
+      .success-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      
+      .success-message {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 30px;
+      }
+      
+      .order-details {
+        text-align: left;
+        margin-bottom: 30px;
+        
+        .order-info {
+          background: #f9f9f9;
+          border-radius: 8px;
+          padding: 20px;
+          margin-bottom: 20px;
+          
+          .info-row {
+            display: flex;
+            margin-bottom: 10px;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+            
+            .info-label {
+              width: 150px;
+              font-weight: 500;
+              color: #555;
+            }
+            
+            .info-value {
+              flex: 1;
+              color: #333;
+            }
+          }
+        }
+        
+        .order-summary {
+          border: 1px solid #eee;
+          border-radius: 8px;
+          
+          .summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+          }
+          
+          .summary-items {
+            padding: 20px;
+            
+            .summary-item {
+              display: flex;
+              margin-bottom: 15px;
+              
+              &:last-child {
+                margin-bottom: 0;
+              }
+              
+              .item-image {
+                position: relative;
+                width: 60px;
+                height: 60px;
+                margin-right: 15px;
+                
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  border-radius: 4px;
+                }
+                
+                .item-quantity {
+                  position: absolute;
+                  top: -5px;
+                  right: -5px;
+                  width: 20px;
+                  height: 20px;
+                  background: #ff6b00;
+                  color: white;
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 12px;
+                  font-weight: 600;
+                }
+              }
+              
+              .item-details {
+                flex: 1;
+                
+                .item-name {
+                  font-size: 14px;
+                  font-weight: 500;
+                  margin: 0 0 5px;
+                  color: #333;
+                }
+                
+                .item-price {
+                  font-size: 14px;
+                  color: #777;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      .success-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        
+        button {
+          padding: 12px 20px;
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          
+          &.btn-view-orders {
+            background: white;
+            border: 1px solid #ff6b00;
+            color: #ff6b00;
+            
+            &:hover {
+              background: #fff8f3;
+            }
+          }
+          
+          &.btn-continue-shopping {
+            background: #ff6b00;
+            border: 1px solid #ff6b00;
+            color: white;
+            
+            &:hover {
+              background: darken(#ff6b00, 10%);
+            }
+          }
+        }
+        
+        @media (max-width: 576px) {
+          flex-direction: column;
+        }
+      }
+    }
+  }

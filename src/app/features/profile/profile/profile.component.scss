@@ -1,0 +1,329 @@
+// src/app/features/profile/profile/profile.component.scss
+@use 'sass:color';
+
+.profile-container {
+    padding: 30px 0;
+    
+    .page-title {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    
+    .profile-content {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 30px;
+      
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .profile-sidebar {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+      
+      .user-info {
+        padding: 20px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+        
+        .user-avatar {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          background: #f5f5f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 15px;
+          
+          i {
+            font-size: 40px;
+            color: #aaa;
+          }
+        }
+        
+        .user-name {
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: 5px;
+        }
+        
+        .user-email {
+          font-size: 14px;
+          color: #777;
+        }
+      }
+      
+      .profile-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+          border-bottom: 1px solid #eee;
+          
+          &:last-child {
+            border-bottom: none;
+          }
+          
+          a {
+            display: block;
+            padding: 15px 20px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            
+            &:hover {
+              background: #f9f9f9;
+              color: #ff6b00;
+            }
+          }
+          
+          &.active a {
+            background: #f9f9f9;
+            color: #ff6b00;
+            font-weight: 500;
+            border-left: 3px solid #ff6b00;
+          }
+        }
+      }
+    }
+    
+    .profile-main {
+      .profile-section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        overflow: hidden;
+        margin-bottom: 30px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        .section-header {
+          padding: 15px 20px;
+          border-bottom: 1px solid #eee;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          
+          .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+          }
+          
+          button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            
+            i {
+              margin-right: 5px;
+            }
+            
+            &.btn-edit:hover {
+              border-color: #ff6b00;
+              color: #ff6b00;
+            }
+            
+            &.btn-add {
+              background: #ff6b00;
+              color: white;
+              border-color: #ff6b00;
+              
+              &:hover {
+                background: color.adjust(#ff6b00, $lightness: -10%);
+              }
+            }
+          }
+        }
+        
+        .profile-form {
+          padding: 20px;
+          
+          .form-group {
+            margin-bottom: 20px;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+            
+            label {
+              display: block;
+              font-size: 14px;
+              color: #777;
+              margin-bottom: 5px;
+            }
+            
+            p {
+              font-size: 16px;
+              color: #333;
+            }
+            
+            input {
+              width: 100%;
+              padding: 10px;
+              border: 1px solid #ddd;
+              border-radius: 4px;
+              font-size: 16px;
+              
+              &:focus {
+                outline: none;
+                border-color: #ff6b00;
+              }
+            }
+          }
+          
+          .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+            
+            button {
+              padding: 10px 20px;
+              border-radius: 4px;
+              font-size: 14px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              
+              &.btn-cancel {
+                background: white;
+                border: 1px solid #ddd;
+                color: #555;
+                
+                &:hover {
+                  background: #f5f5f5;
+                }
+              }
+              
+              &.btn-save {
+                background: #ff6b00;
+                border: 1px solid #ff6b00;
+                color: white;
+                
+                &:hover {
+                  background: color.adjust(#ff6b00, $lightness: -10%);
+                }
+              }
+            }
+          }
+        }
+        
+        .addresses-list {
+          padding: 20px;
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 20px;
+          
+          .address-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            
+            .address-header {
+              padding: 15px;
+              border-bottom: 1px solid #eee;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              
+              .address-title {
+                font-size: 16px;
+                font-weight: 600;
+                margin: 0;
+              }
+              
+              .address-actions {
+                display: flex;
+                gap: 5px;
+                
+                button {
+                  width: 30px;
+                  height: 30px;
+                  border-radius: 4px;
+                  border: 1px solid #ddd;
+                  background: white;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                  
+                  &.btn-edit-address:hover {
+                    border-color: #ff6b00;
+                    color: #ff6b00;
+                  }
+                  
+                  &.btn-delete-address:hover {
+                    border-color: #ff3366;
+                    color: #ff3366;
+                  }
+                }
+              }
+            }
+            
+            .address-content {
+              padding: 15px;
+              
+              p {
+                margin: 0 0 5px;
+                
+                &:last-child {
+                  margin-bottom: 0;
+                }
+              }
+              
+              .address-name {
+                font-weight: 500;
+              }
+            }
+            
+            .address-footer {
+              padding: 15px;
+              border-top: 1px solid #eee;
+              
+              .btn-default {
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                background: white;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                
+                &:hover:not(:disabled) {
+                  border-color: #ff6b00;
+                  color: #ff6b00;
+                }
+                
+                &.active {
+                  background: #f9f9f9;
+                  border-color: #ff6b00;
+                  color: #ff6b00;
+                  cursor: default;
+                }
+                
+                &:disabled {
+                  opacity: 0.7;
+                  cursor: default;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
