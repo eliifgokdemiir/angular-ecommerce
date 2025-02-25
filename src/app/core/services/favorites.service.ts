@@ -1,7 +1,8 @@
 // src/app/core/services/favorites.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../../models/product.model';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,18 @@ import { Product } from '../../models/product.model';
 export class FavoritesService {
   private favorites: Product[] = [];
   private favoritesSubject = new BehaviorSubject<Product[]>(this.favorites);
+  private isBrowser: boolean;
 
-  constructor() {
-    // LocalStorage'dan favorileri yükle
-    const savedFavorites = localStorage.getItem('favorites');
-    if (savedFavorites) {
-      this.favorites = JSON.parse(savedFavorites);
-      this.favoritesSubject.next(this.favorites);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    
+    // LocalStorage'dan favorileri yükle (sadece tarayıcı ortamında)
+    if (this.isBrowser) {
+      const savedFavorites = localStorage.getItem('favorites');
+      if (savedFavorites) {
+        this.favorites = JSON.parse(savedFavorites);
+        this.favoritesSubject.next(this.favorites);
+      }
     }
   }
 
@@ -41,6 +47,10 @@ export class FavoritesService {
 
   private updateFavorites(): void {
     this.favoritesSubject.next(this.favorites);
-    localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    
+    // LocalStorage'a kaydet (sadece tarayıcı ortamında)
+    if (this.isBrowser) {
+      localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    }
   }
 }
