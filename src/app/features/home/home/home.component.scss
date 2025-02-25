@@ -538,17 +538,11 @@
   }
   
   .featured-products {
-    background: url('/assets/images/pattern-light.png') center center;
-    background-size: cover;
+    background-color: #f9f9f9;
   }
   
   .new-arrivals {
-    background: url('/assets/images/pattern-dark.png') center center;
-    background-size: cover;
-    
-    .section-title {
-      color: #222;
-    }
+    background-color: #fff;
   }
   
   // Promotional Banners

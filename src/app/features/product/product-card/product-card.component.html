@@ -3,14 +3,6 @@
       <a [routerLink]="['/products', product.id]">
         <img [src]="product.imageUrl" [alt]="product.name">
       </a>
-      <div class="product-actions">
-        <button class="btn-favorite" (click)="addToFavorites()">
-          <i class="fa fa-heart"></i>
-        </button>
-        <button class="btn-add-cart" (click)="addToCart()">
-          <i class="fa fa-shopping-cart"></i> Sepete Ekle
-        </button>
-      </div>
     </div>
     <div class="product-info">
       <h3 class="product-name">
@@ -23,6 +15,15 @@
       <div class="product-rating">
         <i *ngFor="let star of [1,2,3,4,5]" class="fa" 
            [ngClass]="{'fa-star': star <= product.rating, 'fa-star-o': star > product.rating}"></i>
+      </div>
+      
+      <div class="product-actions">
+        <button class="btn-favorite" (click)="addToFavorites()" [class.active]="isInFavorites">
+          <i class="fa fa-heart"></i>
+        </button>
+        <button class="btn-add-cart" (click)="addToCart()">
+          <i class="fa fa-shopping-cart"></i> Sepete Ekle
+        </button>
       </div>
     </div>
   </div>

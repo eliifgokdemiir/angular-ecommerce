@@ -1,0 +1,204 @@
+@use 'sass:color';
+
+.product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+  
+  .product-image {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    &:hover img {
+      transform: scale(1.05);
+    }
+    
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff6b00;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 1;
+    }
+  }
+  
+  .product-info {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    
+    .product-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      
+      a {
+        color: #333;
+        text-decoration: none;
+        
+        &:hover {
+          color: #ff6b00;
+        }
+      }
+    }
+    
+    .product-price {
+      margin-bottom: 10px;
+      
+      .original-price {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 14px;
+        margin-right: 8px;
+      }
+      
+      .current-price {
+        font-weight: 700;
+        color: #ff6b00;
+        font-size: 18px;
+      }
+    }
+    
+    .product-rating {
+      margin-bottom: 15px;
+      color: #ffc107;
+      
+      i {
+        margin-right: 2px;
+      }
+    }
+    
+    .product-actions {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      margin-top: auto;
+      
+      button {
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        
+        i {
+          font-size: 16px;
+        }
+        
+        &.btn-favorite {
+          background: #f8f9fa;
+          color: #ccc;
+          border: 1px solid #dee2e6;
+          width: 40px;
+          height: 40px;
+          padding: 0;
+          
+          &:hover {
+            color: #ff6b6b;
+            background: #fff0f0;
+          }
+          
+          &.active {
+            background: #fff0f0;
+            color: #ff6b6b;
+            border-color: #ff6b6b;
+          }
+        }
+        
+        &.btn-add-cart {
+          flex: 1;
+          background: #ff6b00;
+          color: white;
+          padding: 10px 15px;
+          
+          i {
+            margin-right: 8px;
+          }
+          
+          &:hover {
+            background: #e86200;
+          }
+          
+          &:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Tablet ve mobil cihazlar için responsive tasarım
+@media (max-width: 992px) {
+  .product-card {
+    .product-info {
+      .product-actions {
+        button {
+          padding: 8px;
+          
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Küçük mobil cihazlar için
+@media (max-width: 576px) {
+  .product-card {
+    .product-info {
+      .product-actions {
+        button {
+          i {
+            margin-right: 5px;
+            font-size: 14px;
+          }
+          
+          span {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Hover efektleri için alternatif (dokunmatik cihazlar için)
+@media (hover: none) {
+  .product-card {
+    &:hover {
+      transform: none;
+    }
+  }
+}
