@@ -1,4 +1,6 @@
 // src/app/features/checkout/checkout-success/checkout-success.component.scss
+@use 'sass:color';
+
 .success-container {
     padding: 50px 0;
     
@@ -165,7 +167,7 @@
             color: white;
             
             &:hover {
-              background: darken(#ff6b00, 10%);
+              background-color: color.adjust(#ff6b00, $lightness: -10%);
             }
           }
         }

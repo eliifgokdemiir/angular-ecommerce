@@ -1,4 +1,7 @@
 // src/app/features/cart/cart/cart.component.scss
+
+@use 'sass:color';
+
 .cart-container {
     padding: 30px 0;
     
@@ -208,7 +211,7 @@
         margin-bottom: 15px;
         
         &:hover {
-          background: darken(#ff6b00, 10%);
+          background-color: color.adjust(#ff6b00, $lightness: -10%);
         }
       }
       
@@ -279,7 +282,7 @@
         transition: all 0.3s ease;
         
         &:hover {
-          background: darken(#ff6b00, 10%);
+          background-color: color.adjust(#ff6b00, $lightness: -10%);
         }
       }
     }
